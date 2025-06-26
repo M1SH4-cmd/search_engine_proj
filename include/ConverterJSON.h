@@ -20,12 +20,12 @@ private:
 
 
     std::map<std::string, std::vector<std::pair<int, int>>> word_index; // слово -> {doc_id, count}
-    void build_index();
+    //void build_index();
 
-
+    // Методы build_index и search использовались для тестирования обработки JSON файлов
 public:
     ConverterJSON();
-    const std::vector<std::vector<std::pair<int, float>>> search();
+    //const std::vector<std::vector<std::pair<int, float>>> search();
 
     std::vector<std::string> get_text_documents();
     int get_responds_limit() const;

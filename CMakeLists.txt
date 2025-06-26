@@ -22,6 +22,10 @@ add_executable(search_engine
         src/main.cpp
         src/ConverterJSON.cpp
         include/ConverterJSON.h
+        src/InvertedIndex.cpp
+        include/InvertedIndex.h
+        src/SearchServer.cpp
+        include/SearchServer.h
 )
 
 target_include_directories(search_engine PUBLIC
@@ -36,6 +40,8 @@ add_executable(tests
         test/test_main.cpp
         test/ConverterJSON_test.cpp
         src/ConverterJSON.cpp
+        src/InvertedIndex.cpp
+        src/SearchServer.cpp
 )
 
 target_include_directories(tests PUBLIC

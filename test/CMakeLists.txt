@@ -2,6 +2,8 @@ add_executable(tests
         test_main.cpp
         ConverterJSON_test.cpp
         ${CMAKE_SOURCE_DIR}/src/ConverterJSON.cpp
+        ${CMAKE_SOURCE_DIR}/src/InvertedIndex.cpp
+        ${CMAKE_SOURCE_DIR}/src/SearchServer.cpp
 )
 
 target_include_directories(tests PUBLIC

@@ -1,5 +1,7 @@
 #include "ConverterJSON.h"
 #include <iostream>
+#include "InvertedIndex.h"
+#include "SearchServer.h"
 
 #ifdef UNIT_TESTS
 // Режим тестирования - пустая main()
@@ -12,14 +14,25 @@ int main() {
 int main() {
     try {
         ConverterJSON converter;
-        converter.get_text_documents();
+        std::vector<std::string> docs = converter.get_text_documents();
+        std::vector<std::string> requests = converter.get_requests();
 
-        converter.put_answers(converter.search());
-        std::cout << "Search completed successfully!" << std::endl;
+        InvertedIndex index;
+        index.UpdateDocumentBase(docs);
+
+        SearchServer server(index);
+        auto results = server.search(requests);
+
+        converter.put_answers(results);
+
+        std::cout << "Search finished. Answers were written to answers.json" << std::endl;
+
     } catch (const std::exception& e) {
-        std::cerr << "Fatal error: " << e.what() << std::endl;
+        std::cerr << "Error: " << e.what() << std::endl;
         return 1;
     }
+
     return 0;
 }
+
 #endif

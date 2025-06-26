@@ -1,47 +1,92 @@
 #include <gtest/gtest.h>
 #include "ConverterJSON.h"
-#include <filesystem>
+#include "InvertedIndex.h"
+#include "SearchServer.h"
 
-TEST(ConverterJSONTest, ConfigFileContent) {
-    std::ifstream cfg_f("config.json");
-    ASSERT_TRUE(cfg_f.is_open()) << "config.json not found!";
+// InvertedIndex
+TEST(TestInvertedIndex, BasicCountTest) {
+    std::vector<std::string> docs = {
+            "milk milk milk milk water water water",
+            "milk water water",
+            "milk milk milk milk milk water water water water water",
+            "americano cappuccino"
+    };
 
-    nlohmann::json data;
-    EXPECT_NO_THROW(cfg_f >> data) << "Invalid JSON in config.json!";
+    InvertedIndex index;
+    index.UpdateDocumentBase(docs);
 
-    EXPECT_TRUE(data.contains("config")) << "No 'config' section";
-    EXPECT_TRUE(data.contains("files")) << "No files list";
+    EXPECT_EQ(index.GetWordCount("milk"), (std::vector<Entry>{
+            {0, 4}, {1, 1}, {2, 5}
+    }));
+
+    EXPECT_EQ(index.GetWordCount("water"), (std::vector<Entry>{
+            {0, 3}, {1, 2}, {2, 5}
+    }));
+
+    EXPECT_EQ(index.GetWordCount("americano"), (std::vector<Entry>{
+            {3, 1}
+    }));
+
+    EXPECT_TRUE(index.GetWordCount("tea").empty());
 }
 
-TEST(ConverterJSONTest, ConfigFileExists) {
+// SearchServer
+TEST(TestSearchServer, SimpleRelevanceTest) {
+    std::vector<std::string> docs = {
+            "milk milk milk milk water water water",
+            "milk water water",
+            "milk milk milk milk milk water water water water water",
+            "americano cappuccino"
+    };
+
+    InvertedIndex index;
+    index.UpdateDocumentBase(docs);
+
+    SearchServer server(index);
+
+    std::vector<std::string> queries = {
+            "milk water",  // есть совпадения
+            "tea"          // ничего не найдено
+    };
+
+    auto results = server.search(queries);
+
+    ASSERT_EQ(results.size(), 2);
+
+    EXPECT_EQ(results[0].size(), 3); // 3 документа с релевантностью
+    EXPECT_EQ(results[0][0].first, 2); // doc 2 — самый релевантный
+    EXPECT_NEAR(results[0][0].second, 1.0f, 0.001); // максимальная релевантность
+
+    EXPECT_TRUE(results[1].empty()); // ничего не найдено
+}
+
+// ConverterJSON
+TEST(TestConverterJSON, ConfigReading) {
+    ConverterJSON conv;
+
     EXPECT_NO_THROW({
-        ConverterJSON converter;
-        auto docs = converter.get_text_documents();
-        EXPECT_FALSE(docs.empty());
+        auto docs = conv.get_text_documents();
+        auto requests = conv.get_requests();
+        int limit = conv.get_responds_limit();
+        EXPECT_GT(docs.size(), 0);
+        EXPECT_GT(requests.size(), 0);
+        EXPECT_GT(limit, 0);
     });
 }
 
-TEST(ConverterJSONTest, ResponsesLimitValid) {
-    ConverterJSON converter;
-    int limit = converter.get_responds_limit();
-    EXPECT_GT(limit, 0);
-}
+// put_answers()
+TEST(TestConverterJSON, WriteAnswersTest) {
+    ConverterJSON conv;
 
-TEST(ConverterJSONTest, RequestsFileHandling) {
-    ConverterJSON converter;
-    EXPECT_NO_THROW({
-        auto requests = converter.get_requests();
-    });
-}
+    std::vector<std::vector<std::pair<int, float>>> answers = {
+            { {0, 1.0f}, {2, 0.7f} },
+            {},
+            { {1, 1.0f} }
+    };
 
-TEST(ConverterJSONTest, AnswersFileGeneration) {
-    ConverterJSON converter;
+    EXPECT_NO_THROW(conv.put_answers(answers));
 
-    EXPECT_NO_THROW(converter.put_answers(converter.search()));
-
-    std::ifstream answer_f("answers.json");
-    EXPECT_TRUE(answer_f.is_open());
-
-    answer_f.seekg(0, std::ios::end);
-    EXPECT_GT(answer_f.tellg(), 0);
+    std::ifstream in("answers.json");
+    EXPECT_TRUE(in.is_open());
+    in.close();
 }
