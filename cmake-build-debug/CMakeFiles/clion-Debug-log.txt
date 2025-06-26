@@ -39,6 +39,6 @@ CMake Deprecation Warning at cmake-build-debug/_deps/googletest-src/googletest/C
 
 -- Could NOT find Python (missing: Python_EXECUTABLE Interpreter) 
 -- Using the multi-header code from C:/Programming/Development/C++_skillbox/search_engine_v2/nlohmann_json/include/
--- Configuring done (7.2s)
+-- Configuring done (7.1s)
 -- Generating done (0.1s)
 -- Build files have been written to: C:/Programming/Development/C++_skillbox/search_engine_v2/cmake-build-debug
