@@ -31,7 +31,7 @@
 
 - **CMake ≥ 3.16**
 - **Компилятор C++17 (MinGW / GCC / MSVC)**
-- **Библиотека nlohmann/json (подключается через CMake)**
+- **Библиотека nlohmann/json
 - **GoogleTest (подключается автоматически через FetchContent)**
 
 ---
