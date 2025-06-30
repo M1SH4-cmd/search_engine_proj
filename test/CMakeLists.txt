@@ -1,3 +1,16 @@
+project(tests)
+
+set(gtest_disable_pthreads ON CACHE BOOL "" FORCE)
+set(JSON_BuildTests OFF CACHE INTERNAL "")
+
+include(FetchContent)
+
+FetchContent_Declare(
+        googletest
+        URL https://github.com/google/googletest/archive/609281088cfefc76f9d0ce82e1ff6c30cc3591e5.zip
+)
+FetchContent_MakeAvailable(googletest)
+
 add_executable(tests
         test_main.cpp
         ConverterJSON_test.cpp
@@ -13,6 +26,7 @@ target_include_directories(tests PUBLIC
 target_link_libraries(tests PRIVATE
         nlohmann_json::nlohmann_json
         gtest_main
+        gtest
 )
 
 include(GoogleTest)

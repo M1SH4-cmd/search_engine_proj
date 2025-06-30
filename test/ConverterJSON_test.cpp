@@ -86,7 +86,7 @@ TEST(TestConverterJSON, WriteAnswersTest) {
 
     EXPECT_NO_THROW(conv.put_answers(answers));
 
-    std::ifstream in("answers.json");
+    std::ifstream in("../JSON/answers.json");
     EXPECT_TRUE(in.is_open());
     in.close();
 }
