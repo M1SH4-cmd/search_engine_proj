@@ -5,6 +5,9 @@
 #include <vector>
 #include <map>
 #include <sstream>
+#include <thread>
+#include <algorithm>
+#include <mutex>
 
 struct Entry {
     size_t doc_id;
@@ -18,7 +21,7 @@ struct Entry {
 class InvertedIndex {
 public:
     InvertedIndex() = default;
-
+    void indexate(const std::vector<std::string> &docs, size_t i);
     void UpdateDocumentBase(const std::vector<std::string>& input_docs);
     std::vector<Entry> GetWordCount(const std::string& word);
 

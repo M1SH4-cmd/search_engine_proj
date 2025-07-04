@@ -2,7 +2,6 @@
 #define SEARCH_ENGINE_SEARCHSERVER_H
 
 #include "InvertedIndex.h"
-#include <algorithm>
 
 struct RelativeIndex {
     size_t doc_id;
@@ -22,7 +21,5 @@ public:
 private:
     InvertedIndex& _index;
 };
-
-
 
 #endif //SEARCH_ENGINE_SEARCHSERVER_H

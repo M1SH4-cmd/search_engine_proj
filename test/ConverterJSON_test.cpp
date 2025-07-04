@@ -15,13 +15,25 @@ TEST(TestInvertedIndex, BasicCountTest) {
     InvertedIndex index;
     index.UpdateDocumentBase(docs);
 
-    EXPECT_EQ(index.GetWordCount("milk"), (std::vector<Entry>{
-            {0, 4}, {1, 1}, {2, 5}
-    }));
+    auto result_milk = index.GetWordCount("milk");
+    std::sort(result_milk.begin(), result_milk.end(), [](const Entry& a, const Entry& b) {
+        return a.doc_id < b.doc_id;
+    });
 
-    EXPECT_EQ(index.GetWordCount("water"), (std::vector<Entry>{
-            {0, 3}, {1, 2}, {2, 5}
-    }));
+    EXPECT_EQ(
+            result_milk,
+            (std::vector<Entry>{ {0, 4}, {1, 1}, {2, 5} })
+    );
+
+    auto result_water = index.GetWordCount("water");
+    std::sort(result_milk.begin(), result_milk.end(), [](const Entry& a, const Entry& b) {
+        return a.doc_id < b.doc_id;
+    });
+
+    EXPECT_EQ(
+            result_water,
+            (std::vector<Entry>{ {0, 3}, {1, 2}, {2, 5} })
+    );
 
     EXPECT_EQ(index.GetWordCount("americano"), (std::vector<Entry>{
             {3, 1}
