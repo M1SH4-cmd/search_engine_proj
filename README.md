@@ -48,7 +48,6 @@ cd search_engine
 ### 🧱 3. Соберите проект
 
 ```bash
-mkdir build
 cd build
 cmake ..
 cmake --build .
