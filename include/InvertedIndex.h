@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <mutex>
 
+
 struct Entry {
     size_t doc_id;
     size_t count;
@@ -28,6 +29,8 @@ public:
 private:
     std::vector<std::string> docs; // хранилище всех документов
     std::map<std::string, std::vector<Entry>> freq_dictionary; // инвертированный индекс
+    std::mutex dict_mutex;
+
 };
 
 

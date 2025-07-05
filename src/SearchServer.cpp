@@ -1,6 +1,7 @@
 #include "SearchServer.h"
 
 std::vector<std::vector<std::pair<int, float>>> SearchServer::search(const std::vector<std::string>& queries_input) {
+    if (queries_input.empty()) return {};
     std::vector<std::vector<RelativeIndex>> results;
 
     for (const auto& query : queries_input) {
@@ -32,8 +33,11 @@ std::vector<std::vector<std::pair<int, float>>> SearchServer::search(const std::
         }
 
         std::sort(rel_list.begin(), rel_list.end(), [](const RelativeIndex& a, const RelativeIndex& b) {
-            return b.rank < a.rank;  // от большего к меньшему
+            if (a.rank != b.rank)
+                return b.rank < a.rank;  // по убыванию rank
+            return a.doc_id < b.doc_id;  // по возрастанию doc_id при равных rank
         });
+
 
         results.push_back(rel_list);
     }
@@ -42,7 +46,7 @@ std::vector<std::vector<std::pair<int, float>>> SearchServer::search(const std::
     for (const auto& vec : results) {
         std::vector<std::pair<int, float>> line;
         for (const auto& rel : vec) {
-            line.emplace_back(rel.doc_id, rel.rank);
+            line.emplace_back(static_cast<int>(rel.doc_id), static_cast<float>(rel.rank));
         }
         converted.push_back(line);
     }

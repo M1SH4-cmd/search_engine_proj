@@ -22,7 +22,7 @@ ConverterJSON::ConverterJSON() {
 
     std::ifstream requests_f("../JSON/requests.json");
     if (!requests_f.is_open()) {
-        std::cerr << "Failed to open config.json file!" << std::endl;
+        std::cerr << "Failed to open requests.json file!" << std::endl;
         return;
     }
 
@@ -37,24 +37,23 @@ ConverterJSON::ConverterJSON() {
 
 std::vector<std::string> ConverterJSON::get_text_documents() {
     std::vector<std::string> texts;
-    std::string line;
 
-    if(files.empty()) return texts;
-    for(const auto & file : files){
+    if (files.empty()) return texts;
+
+    for (const auto& file : files) {
+        if (file.empty()) continue;
+
         std::ifstream f(file);
-        while(true){
-            line = "";
-            std::getline(f, line);
-            texts.push_back(line);
-            if(f.eof()) {
-                f.close();
-                break;
-            }
-        }
+        if (!f.is_open()) continue;
 
+        std::stringstream buffer;
+        buffer << f.rdbuf();
+        texts.push_back(buffer.str());
     }
+
     return texts;
 }
+
 
 int ConverterJSON::get_responds_limit() const {
     return max_responses;
@@ -68,9 +67,10 @@ void ConverterJSON::put_answers(const std::vector<std::vector<std::pair<int, flo
     json resultJson;
     json answersObj;
 
-    for (size_t i = 0; i < answers.size(); ++i) {
-        std::string requestId = "request" + std::to_string(i + 1);
-        requestId = std::string(3 - requestId.length() % 3, '0') + requestId; //ведущие нули
+    for (int i = 0; i < answers.size(); ++i) {
+        std::ostringstream oss;
+        oss << "request" << std::setw(3) << std::setfill('0') << (i + 1);
+        std::string requestId = oss.str();
 
         json responseObj;
 

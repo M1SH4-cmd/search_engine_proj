@@ -1,5 +1,4 @@
 #include "ConverterJSON.h"
-#include <iostream>
 #include "InvertedIndex.h"
 #include "SearchServer.h"
 
@@ -18,8 +17,8 @@ int main() {
         std::vector<std::string> requests = converter.get_requests();
 
         InvertedIndex index;
-        index.UpdateDocumentBase(docs);
 
+        index.UpdateDocumentBase(docs);
         SearchServer server(index);
         auto results = server.search(requests);
 
