@@ -6,6 +6,7 @@ ConverterJSON::ConverterJSON() {
     std::ifstream cfg_f("../JSON/config.json");
     if (!cfg_f.is_open()) {
         std::cerr << "Failed to open config.json file!" << std::endl;
+        exit(1);
         return;
     }
 
@@ -18,11 +19,13 @@ ConverterJSON::ConverterJSON() {
         cfg_f.close();
     } catch (const json::exception& e) {
         std::cerr << "JSON parsing error: " << e.what() << std::endl;
+        exit(1);
     }
 
     std::ifstream requests_f("../JSON/requests.json");
     if (!requests_f.is_open()) {
         std::cerr << "Failed to open requests.json file!" << std::endl;
+        exit(1);
         return;
     }
 
@@ -32,6 +35,7 @@ ConverterJSON::ConverterJSON() {
         requests_f.close();
     } catch (const json::exception& e){
         std::cerr << "JSON parsing error: " << e.what() << std::endl;
+        exit(1);
     }
 }
 
@@ -103,5 +107,6 @@ void ConverterJSON::put_answers(const std::vector<std::vector<std::pair<int, flo
         answers_f << resultJson.dump(4);
     } else {
         std::cerr << "Error: Could not create/open answers.json" << std::endl;
+        exit(1);
     }
 }

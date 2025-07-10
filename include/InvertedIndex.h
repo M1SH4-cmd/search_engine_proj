@@ -8,7 +8,7 @@
 #include <thread>
 #include <algorithm>
 #include <mutex>
-
+#include <cmath>
 
 struct Entry {
     size_t doc_id;

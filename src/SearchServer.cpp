@@ -38,7 +38,6 @@ std::vector<std::vector<std::pair<int, float>>> SearchServer::search(const std::
             return a.doc_id < b.doc_id;  // по возрастанию doc_id при равных rank
         });
 
-
         results.push_back(rel_list);
     }
 
@@ -50,7 +49,6 @@ std::vector<std::vector<std::pair<int, float>>> SearchServer::search(const std::
         }
         converted.push_back(line);
     }
-
 
     return converted;
 }
