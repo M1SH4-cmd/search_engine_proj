@@ -13,9 +13,9 @@ TEST(TestInvertedIndex, BasicCountTest) {
     };
 
     InvertedIndex index;
-    index.UpdateDocumentBase(docs);
+    index.update_document_base(docs);
 
-    auto result_milk = index.GetWordCount("milk");
+    auto result_milk = index.get_word_count("milk");
     std::sort(result_milk.begin(), result_milk.end(), [](const Entry& a, const Entry& b) {
         return a.doc_id < b.doc_id;
     });
@@ -25,7 +25,7 @@ TEST(TestInvertedIndex, BasicCountTest) {
             (std::vector<Entry>{ {0, 4}, {1, 1}, {2, 5} })
     );
 
-    auto result_water = index.GetWordCount("water");
+    auto result_water = index.get_word_count("water");
     std::sort(result_milk.begin(), result_milk.end(), [](const Entry& a, const Entry& b) {
         return a.doc_id < b.doc_id;
     });
@@ -35,11 +35,11 @@ TEST(TestInvertedIndex, BasicCountTest) {
             (std::vector<Entry>{ {0, 3}, {1, 2}, {2, 5} })
     );
 
-    EXPECT_EQ(index.GetWordCount("americano"), (std::vector<Entry>{
+    EXPECT_EQ(index.get_word_count("americano"), (std::vector<Entry>{
             {3, 1}
     }));
 
-    EXPECT_TRUE(index.GetWordCount("tea").empty());
+    EXPECT_TRUE(index.get_word_count("tea").empty());
 }
 
 // SearchServer
@@ -52,7 +52,7 @@ TEST(TestSearchServer, SimpleRelevanceTest) {
     };
 
     InvertedIndex index;
-    index.UpdateDocumentBase(docs);
+    index.update_document_base(docs);
 
     SearchServer server(index);
 

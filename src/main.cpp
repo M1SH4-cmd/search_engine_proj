@@ -44,7 +44,7 @@ int main() {
 
         InvertedIndex index;
 
-        index.UpdateDocumentBase(docs);
+        index.update_document_base(docs);
         SearchServer server(index);
         auto results = server.search(requests);
 

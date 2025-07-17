@@ -11,7 +11,7 @@ std::vector<std::vector<std::pair<int, float>>> SearchServer::search(const std::
 
         //все слова из запроса
         while (iss >> word) {
-            for (const Entry& entry : _index.GetWordCount(word)) {
+            for (const Entry& entry : _index.get_word_count(word)) {
                 doc_relevance[entry.doc_id] += entry.count;
             }
         }

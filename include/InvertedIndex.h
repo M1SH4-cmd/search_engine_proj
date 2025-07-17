@@ -23,8 +23,8 @@ class InvertedIndex {
 public:
     InvertedIndex() = default;
     void indexate(const std::vector<std::string> &docs, size_t i);
-    void UpdateDocumentBase(const std::vector<std::string>& input_docs);
-    std::vector<Entry> GetWordCount(const std::string& word);
+    void update_document_base(const std::vector<std::string>& input_docs);
+    std::vector<Entry> get_word_count(const std::string& word);
 
 private:
     std::vector<std::string> docs; // хранилище всех документов

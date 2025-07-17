@@ -1,6 +1,6 @@
 #include "InvertedIndex.h"
 
-void InvertedIndex::UpdateDocumentBase(const std::vector<std::string>& input_docs) {
+void InvertedIndex::update_document_base(const std::vector<std::string>& input_docs) {
     {
         std::lock_guard<std::mutex> lock(dict_mutex);
         docs = input_docs;
@@ -16,7 +16,6 @@ void InvertedIndex::UpdateDocumentBase(const std::vector<std::string>& input_doc
         t.join();
     }
 }
-
 
 void InvertedIndex::indexate(const std::vector<std::string> &input_docs, size_t i) {
 
@@ -34,7 +33,7 @@ void InvertedIndex::indexate(const std::vector<std::string> &input_docs, size_t 
     }
 }
 
-std::vector<Entry> InvertedIndex::GetWordCount(const std::string& word) {
+std::vector<Entry> InvertedIndex::get_word_count(const std::string& word) {
     std::lock_guard<std::mutex> lock(dict_mutex);
     auto it = freq_dictionary.find(word);
     if (it != freq_dictionary.end()) {
