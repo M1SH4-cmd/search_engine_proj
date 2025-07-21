@@ -48,8 +48,7 @@ cd search_engine
 ### 🧱 3. Соберите проект
 
 ```bash
-mkdir build
-cd build
+cd cmake-build-debug
 cmake ..
 cmake --build .
 ```
@@ -76,7 +75,7 @@ cmake --build .
 ### 🧪 5. Запуск тестов (опционально)
 
 ```bash
-cd build
+cd cmake-build-debug
 ctest
 ```
 или
