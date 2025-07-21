@@ -39,8 +39,8 @@
 ### 🗂 2. Клонируйте репозиторий
 
 ```bash
-git clone https://github.com/your-username/search_engine.git
-cd search_engine
+git clone https://github.com/M1SH4-cmd/search_engine_proj
+cd search_engine_proj
 ```
 
 ---
