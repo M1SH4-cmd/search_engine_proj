@@ -3,7 +3,7 @@
 using json = nlohmann::json;
 
 ConverterJSON::ConverterJSON() {
-    std::ifstream cfg_f("../JSON/config.json");
+    std::ifstream cfg_f("config.json");
     if (!cfg_f.is_open()) {
         std::cerr << "Failed to open config.json file!" << std::endl;
         exit(1);
@@ -22,7 +22,7 @@ ConverterJSON::ConverterJSON() {
         exit(1);
     }
 
-    std::ifstream requests_f("../JSON/requests.json");
+    std::ifstream requests_f("requests.json");
     if (!requests_f.is_open()) {
         std::cerr << "Failed to open requests.json file!" << std::endl;
         exit(1);
@@ -102,7 +102,7 @@ void ConverterJSON::put_answers(const std::vector<std::vector<std::pair<int, flo
 
     resultJson["answers"] = answersObj;
 
-    std::ofstream answers_f("../JSON/answers.json");
+    std::ofstream answers_f("answers.json");
     if (answers_f.is_open()) {
         answers_f << resultJson.dump(4);
     } else {

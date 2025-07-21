@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"C:/Programming/Development/Projs/search_engine_v2/cmake-build-debug/_deps/googletest-subbuild/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

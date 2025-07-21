@@ -13,7 +13,7 @@ int main() {
 // Режим обычной работы
 int main() {
 
-    std::ifstream f1("../JSON/config.json");
+    std::ifstream f1("config.json");
     if (!f1.is_open()) {
         std::cerr << "Error opening config.json!" << std::endl;
         return 1;
@@ -22,12 +22,12 @@ int main() {
     }
     f1.close();
 
-    std::ifstream f2("../JSON/requests.json");
+    std::ifstream f2("requests.json");
     if (!f2.is_open()) {
         std::cerr << "Error opening config.json!" << std::endl;
         return 1;
     } else {
-        std::cout << "File config.json loaded successfully" << std::endl;
+        std::cout << "File requests.json loaded successfully" << std::endl;
     }
     f2.close();
 
